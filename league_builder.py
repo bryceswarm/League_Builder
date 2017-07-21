@@ -12,8 +12,8 @@
 import csv
 
 # read CSV and return Dictionaries
-file_name = "soccer_players.csv"
-team_names = [{'Team': 'Dragons'}, {'Team': 'Sharks'}, {'Team': 'Raptors'}]
+file_name = "/Users/Swarm/Desktop/Bryce's stuff/Treehouse TechDegree/Python/Soccer League/League_Builder/soccer_players.csv"
+team_names = ['Dragons', 'Sharks', 'Raptors', 'Dolphins']
 practice_time = 'August 17th, at 3:30pm'
 
 def get_player_data(filename):
@@ -33,28 +33,22 @@ def get_player_exp(playerlist, experience):
 def get_teams(experience_level, team_list):
     players_with_team = []
     for num, player in enumerate(experience_level):
-        teamnum = num % 3
-        player['Team'] = team_list[teamnum]['Team']
+        teamnum = num % len(team_names)
+        player['Team'] = team_list[teamnum]
         players_with_team.append(player)
     return players_with_team
 
-# create team rosters file 'teams.txt'
-def write_team_file(teams):
-    team_file = open('teams.txt', 'w')
-    team_file.write('Dragons\n---------------------\n')
-    for player in teams:
-        if player['Team'] == 'Dragons':
-            team_file.write(player['Name']+', '+player['Soccer Experience']+', '+player['Guardian Name(s)']+'\n')
-    team_file.write('\nSharks\n---------------------\n')
-    for player in teams:
-        if player['Team'] == 'Sharks':
-            team_file.write(player['Name']+', '+player['Soccer Experience']+', '+player['Guardian Name(s)']+'\n')
-    team_file.write('\nRaptors\n---------------------\n')
-    for player in teams:
-        if player['Team'] == 'Raptors':
-            team_file.write(
-                player['Name'] + ', ' + player['Soccer Experience'] + ', ' + player['Guardian Name(s)'] + '\n')
 
+def write_team_file(players):
+    with open('teams.txt', 'w') as f:
+        for team in team_names:
+            _write_team(f, team, [p for p in players if p['Team'] == team])
+
+def _write_team(file_descriptor, team_name, players):
+    file_descriptor.write("{0}\n---------------------\n".format(team_name))
+    for player in players:
+        file_descriptor.write("{Name}, {Soccer Experience}, {Guardian Name(s)}\n".format(**player))
+    file_descriptor.write('\n')
 
 # create letters to guardians
 def write_guardian_letters(teams):
@@ -82,7 +76,7 @@ if __name__ == '__main__':
     experienced_player = get_teams(experienced_player, team_names)
     inexperienced_player = get_teams(inexperienced_player, team_names)
     assigned_teams = experienced_player + inexperienced_player
-
+    print(assigned_teams)
     # create team rosters file 'teams.txt'
     write_team_file(assigned_teams)
 
