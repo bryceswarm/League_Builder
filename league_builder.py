@@ -12,7 +12,7 @@
 import csv
 
 # read CSV and return Dictionaries
-file_name = "/Users/Swarm/Desktop/Bryce's stuff/Treehouse TechDegree/Python/Soccer League/League_Builder/soccer_players.csv"
+file_name = "soccer_players.csv"
 team_names = ['Dragons', 'Sharks', 'Raptors', 'Dolphins']
 practice_time = 'August 17th, at 3:30pm'
 
